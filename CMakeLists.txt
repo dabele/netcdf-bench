@@ -3,6 +3,8 @@ project(NetCDF-Bench)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/dev/cmake/modules/")
 
+set(NCBENCH_DATATYPE "int" CACHE STRING "datatype (double, int)")
+
 #set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 #set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -16,8 +18,13 @@ set (CMAKE_C_FLAGS_RELEASE "-O3")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99")
 set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 
-add_definitions("-DDATATYPE=int")
-add_definitions("-DNC_DATATYPE=NC_INT")
+if ("${NCBENCH_DATATYPE}" STREQUAL "int")
+    add_definitions("-DDATATYPE=int")
+    add_definitions("-DNC_DATATYPE=NC_INT")
+elseif ("${NCBENCH_DATATYPE}" STREQUAL "double")
+    add_definitions("-DDATATYPE=double")
+    add_definitions("-DNC_DATATYPE=NC_DOUBLE")
+endif()
 
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
