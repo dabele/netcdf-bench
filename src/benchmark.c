@@ -228,7 +228,7 @@ int benchmark_run(benchmark_t* bm, DATATYPE* compare_block){
     sprintf(testfn, "%s", bm->testfn);
   }
 
-  printf("%d pretents to be %d on file %s\n", bm->rank, myShiftedRank, testfn);
+  DEBUG_MESSAGE("%d pretents to be %d on file %s\n", bm->rank, myShiftedRank, testfn);
 
 	if(bm->io_mode == IO_MODE_WRITE){
 			cmode = NC_CLOBBER | NC_MPIIO | NC_NETCDF4;
