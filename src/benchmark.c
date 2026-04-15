@@ -271,9 +271,13 @@ int benchmark_run(benchmark_t* bm, DATATYPE* compare_block){
 				err = nc_def_var_deflate(ncid, varid, shuffle, deflate, deflate_level); FATAL_NC_ERR;
 			}
 
-			if (! bm->use_fill_value){
-				err = nc_def_var_fill(ncid, varid, 1, &err); FATAL_NC_ERR;
+
+			DATATYPE fill_value = -1;
+			int fill = NC_FILL;
+			if (!bm->use_fill_value){
+				fill = NC_NOFILL;
 			}
+			err = nc_def_var_fill(ncid, varid, fill, &fill_value); FATAL_NC_ERR;
 			err = nc_enddef(ncid); NC_ERR;
 	}else{
 			err = nc_open_par(testfn, NC_MPIIO, bm->com, MPI_INFO_NULL, &ncid); FATAL_NC_ERR;
