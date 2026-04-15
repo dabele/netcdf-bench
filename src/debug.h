@@ -21,12 +21,13 @@
 
 #ifdef DEBUG
 #define DEBUG_MESSAGE(...) \
-{ \
+do { \
 	int debug_rank = 0; \
  	MPI_Comm_rank(MPI_COMM_WORLD, &debug_rank); \
 	fprintf(stdout, "DEBUG [%d] %*s:%-*d ", debug_rank, 15, basename(__FILE__), 5, __LINE__); \
 	fprintf(stdout, __VA_ARGS__); \
-}
+	fflush(stdout); \
+} while(0)
 #else
 #define DEBUG_MESSAGE(...)
 #endif

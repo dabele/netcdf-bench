@@ -54,12 +54,12 @@ char* create_pretty_number_ll(const double value) {
   double b = value - a;
 
   int n = floor(log10(a));
-  for (size_t pos = n; pos >= n/3*3; --pos) {
-    fprintf(stream, "%d", to_char(value, pos));
+  for (int64_t pos = n; pos >= n/3*3; --pos) {
+    fprintf(stream, "%d", to_char(value, (size_t)pos));
   }
   fprintf(stream, ".");
-  for (size_t pos = n/3*3-1; pos > n/3*3-2; --pos) {
-    fprintf(stream, "%d", to_char(value, pos));
+  for (int64_t pos = n/3*3-1; pos > n/3*3-2; --pos) {
+    fprintf(stream, "%d", to_char(value, (size_t)pos));
   }
 
   fprintf(stream, " %s%s", names[n/3], "B");
@@ -400,6 +400,7 @@ int main(int argc, char ** argv){
 			header_printed = 1;
 		}
 	}
+	fflush(stdout);
 	if (args.write_test) {
 		benchmark_run(&wbm, NULL);
 		report_t report;
